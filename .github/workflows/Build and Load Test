@@ -1,0 +1,36 @@
+name: Build and Load Test
+
+on:
+  push:
+    branches:
+    - main
+    - features/**
+    - dependabot/**
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  docker:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Start Infrastructure
+      run:  docker-compose -f docker-compose.infra.yml up --build --force-recreate -d   
+
+    - name: Start containers
+      run:  docker-compose -f docker-compose.app.yml up --build --force-recreate -d   
+
+    - name: Start load balancers
+      run:   docker-compose -f docker-compose.loadbalancer.yml up --build --force-recreate -d 
+      
+    - name: Run Load Test
+      run: docker-compose -f docker-compose.loadtests.yml up --build
+
+    - name: Stop containers
+      if: always()
+      run: docker-compose -f docker-compose.infra.ym -f  docker-compose.app.yml -f docker-compose.loadtests.yml  down
