@@ -30,7 +30,7 @@ jobs:
       
     - name: Run Load Test
       run: docker-compose -f docker-compose.loadtests.yml up --build
-
-    - name: Stop containers
-      if: always()
-      run: docker-compose -f docker-compose.infra.yml -f  docker-compose.apps.yml -f docker-compose.loadtests.yml  down
+#
+#    - name: Stop containers
+#      if: always()
+#      run: docker-compose -f docker-compose.infra.yml -f  docker-compose.apps.yml -f docker-compose.loadtests.yml  down
