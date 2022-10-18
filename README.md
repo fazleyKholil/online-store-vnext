@@ -1,7 +1,7 @@
 # online-store-vnext
 [![Build and Load Test](https://github.com/fazleyKholil/online-store/actions/workflows/docker-compose-build.yml/badge.svg)](https://github.com/fazleyKholil/online-store/actions/workflows/docker-compose-build.yml)
 
-Demo online store demonstrating an optimisation from a monolith application to a scalable architecture
+Demo online store demonstrating an optimisation from a monolith application https://github.com/fazleyKholil/online-store to a scalable architecture
 
 # Application Structure
 ![Application Architecture](./resources/new%20architecture.png "Application Architecture")
