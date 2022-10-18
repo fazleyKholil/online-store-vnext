@@ -23,7 +23,7 @@ jobs:
       run:  docker-compose -f docker-compose.infra.yml up --build --force-recreate -d   
 
     - name: Start containers
-      run:  docker-compose -f docker-compose.app.yml up --build --force-recreate -d   
+      run:  docker-compose -f docker-compose.apps.yml up --build --force-recreate -d   
 
     - name: Start load balancers
       run:   docker-compose -f docker-compose.loadbalancer.yml up --build --force-recreate -d 
@@ -33,4 +33,4 @@ jobs:
 
     - name: Stop containers
       if: always()
-      run: docker-compose -f docker-compose.infra.ym -f  docker-compose.app.yml -f docker-compose.loadtests.yml  down
+      run: docker-compose -f docker-compose.infra.ym -f  docker-compose.apps.yml -f docker-compose.loadtests.yml  down
