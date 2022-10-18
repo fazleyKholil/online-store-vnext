@@ -1,0 +1,28 @@
+version: '3.5'
+
+services:
+
+  nginx-api:
+    build: ./docker-setup/nginx-api
+    ports:
+      - "5050:80"
+    networks:
+      - onlinestore-vnext-network
+
+  nginx-inventory:
+    build: ./docker-setup/nginx-inventory
+    ports:
+      - "5051:80"
+    networks:
+      - onlinestore-vnext-network
+
+  nginx-shipping:
+    build: ./docker-setup/nginx-shipping
+    ports:
+      - "5052:80"
+    networks:
+      - onlinestore-vnext-network
+
+networks:
+  onlinestore-vnext-network:
+    name: onlinestore-vnext-network

@@ -1,0 +1,205 @@
+version: '3.5'
+
+services:
+
+  store-api-1:
+    build:
+      context: .
+      dockerfile: src/Online.Store.Api/Dockerfile
+    container_name: store-api-1
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:5000
+      - Serilog:WriteTo:0:Args:serverUrl=http://seq:5341
+      - Sqs:QueueUrl=http://online-store.localstack:4576/queue/online-store-local
+      - Sqs:ServiceUrl=http://online-store.localstack:4576/
+      - Sqs:AccessKey=xxx
+      - Sqs:SecretKey=xxx
+      - Microservice:InventoryServiceUrl=http://nginx-inventory/Inventory/
+      - Microservice:ShippingServiceUrl=http://nginx-shipping/Shipping/
+    ports:
+      - "5001:5000"
+    networks:
+      - onlinestore-vnext-network
+
+  store-api-2:
+    build:
+      context: .
+      dockerfile: src/Online.Store.Api/Dockerfile
+    container_name: store-api-2
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:5000
+      - Serilog:WriteTo:0:Args:serverUrl=http://seq:5341
+      - Sqs:QueueUrl=http://online-store.localstack:4576/queue/online-store-local
+      - Sqs:ServiceUrl=http://online-store.localstack:4576/
+      - Sqs:AccessKey=xxx
+      - Sqs:SecretKey=xxx
+      - Microservice:InventoryServiceUrl=http://nginx-inventory/Inventory/
+      - Microservice:ShippingServiceUrl=http://nginx-shipping/Shipping/
+    ports:
+      - "5002:5000"
+    networks:
+      - onlinestore-vnext-network
+
+  store-api-3:
+    build:
+      context: .
+      dockerfile: src/Online.Store.Api/Dockerfile
+    container_name: store-api-3
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:5000
+      - Serilog:WriteTo:0:Args:serverUrl=http://seq:5341
+      - Sqs:QueueUrl=http://online-store.localstack:4576/queue/online-store-local
+      - Sqs:ServiceUrl=http://online-store.localstack:4576/
+      - Sqs:AccessKey=xxx
+      - Sqs:SecretKey=xxx
+      - Microservice:InventoryServiceUrl=http://nginx-inventory/Inventory/
+      - Microservice:ShippingServiceUrl=http://nginx-shipping/Shipping/
+    ports:
+      - "5003:5000"
+    networks:
+      - onlinestore-vnext-network
+
+  inventory-service-1:
+    build:
+      context: .
+      dockerfile: src/Inventory.Service/Dockerfile
+    container_name: inventory-service-1
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:5000
+      - Serilog:WriteTo:0:Args:serverUrl=http://seq:5341
+    ports:
+      - "5101:5000"
+    networks:
+      - onlinestore-vnext-network
+  
+  inventory-service-2:
+    build:
+      context: .
+      dockerfile: src/Inventory.Service/Dockerfile
+    container_name: inventory-service-2
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:5000
+      - Serilog:WriteTo:0:Args:serverUrl=http://seq:5341
+    ports:
+      - "5102:5000"
+    networks:
+      - onlinestore-vnext-network
+
+  inventory-service-3:
+    build:
+      context: .
+      dockerfile: src/Inventory.Service/Dockerfile
+    container_name: inventory-service-3
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:5000
+      - Serilog:WriteTo:0:Args:serverUrl=http://seq:5341
+    ports:
+      - "5103:5000"
+    networks:
+      - onlinestore-vnext-network     
+
+  shipping-service-1:
+    build:
+      context: .
+      dockerfile: src/Shipping.Service/Dockerfile
+    container_name: shipping-service-1
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:5000
+      - Serilog:WriteTo:0:Args:serverUrl=http://seq:5341
+    ports:
+      - "7001:5000"
+    networks:
+      - onlinestore-vnext-network
+
+  shipping-service-2:
+    build:
+      context: .
+      dockerfile: src/Shipping.Service/Dockerfile
+    container_name: shipping-service-2
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:5000
+      - Serilog:WriteTo:0:Args:serverUrl=http://seq:5341
+    ports:
+      - "7002:5000"
+    networks:
+      - onlinestore-vnext-network
+
+  shipping-service-3:
+    build:
+      context: .
+      dockerfile: src/Shipping.Service/Dockerfile
+    container_name: shipping-service-3
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:5000
+      - Serilog:WriteTo:0:Args:serverUrl=http://seq:5341
+    ports:
+      - "7003:5000"
+    networks:
+      - onlinestore-vnext-network
+
+  accounting-service-1:
+    build:
+      context: .
+      dockerfile: src/Accounting.Service/Dockerfile
+    container_name: accounting-service-1
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:5000
+      - Sqs:QueueUrl=http://online-store.localstack:4576/queue/online-store-local
+      - Sqs:ServiceUrl=http://online-store.localstack:4576/
+      - Sqs:AccessKey=xxx
+      - Sqs:SecretKey=xxx
+      - Serilog:WriteTo:0:Args:serverUrl=http://seq:5341
+    ports:
+      - "8001:5000"
+    networks:
+      - onlinestore-vnext-network
+
+  accounting-service-2:
+    build:
+      context: .
+      dockerfile: src/Accounting.Service/Dockerfile
+    container_name: accounting-service-2
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:5000
+      - Sqs:QueueUrl=http://online-store.localstack:4576/queue/online-store-local
+      - Sqs:ServiceUrl=http://online-store.localstack:4576/
+      - Sqs:AccessKey=xxx
+      - Sqs:SecretKey=xxx
+      - Serilog:WriteTo:0:Args:serverUrl=http://seq:5341
+    ports:
+      - "8002:5000"
+    networks:
+      - onlinestore-vnext-network
+
+  accounting-service-3:
+    build:
+      context: .
+      dockerfile: src/Accounting.Service/Dockerfile
+    container_name: accounting-service-3
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:5000
+      - Sqs:QueueUrl=http://online-store.localstack:4576/queue/online-store-local
+      - Sqs:ServiceUrl=http://online-store.localstack:4576/
+      - Sqs:AccessKey=xxx
+      - Sqs:SecretKey=xxx
+      - Serilog:WriteTo:0:Args:serverUrl=http://seq:5341
+    ports:
+      - "8003:5000"
+    networks:
+      - onlinestore-vnext-network
+
+networks:
+  onlinestore-vnext-network:
+    name: onlinestore-vnext-network

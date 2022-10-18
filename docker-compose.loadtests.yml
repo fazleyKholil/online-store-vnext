@@ -1,0 +1,19 @@
+version: "3.5"
+
+
+services:
+  k6:
+    container_name: k6
+    image: k6
+    build:
+      context: ./docker-setup/k6
+    ports:
+      - "6565:6565"
+    environment:
+      - K6_OUT=influxdb=http://influxdb:8086/k6
+    networks:
+      - onlinestore-vnext-network
+
+networks:
+  onlinestore-vnext-network:
+    name: onlinestore-vnext-network

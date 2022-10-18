@@ -1,0 +1,81 @@
+version: '3.5'
+
+services:
+  online-store.localstack:
+    image: localstack/localstack:0.11.2
+    container_name: localstack
+    ports:
+      - "4563-4599:4563-4599"
+      - "8080:8080"
+    environment:
+      - SERVICES=sqs
+      - DEFAULT_REGION=us-east-1
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+    volumes:
+      - "localstack-data:/tmp/localstack"
+    networks:
+      - onlinestore-vnext-network
+
+  online-store.localstack.config:
+    container_name: localstack-config
+    build:
+      context: ./docker-setup/localstack-config
+    environment:
+      - AWS_SECRET_KEY_ID=xxx
+      - AWS_SECRET_ACCESS_KEY=xxx
+      - REGION_NAME=us-east-1
+      - ENDPOINT_URL=online-store.localstack
+    depends_on:
+      - online-store.localstack
+    networks:
+      - onlinestore-vnext-network
+
+  prometheus:
+    build:
+      context: ./docker-setup/prometheus
+      dockerfile: Dockerfile
+    container_name: prometheus
+    ports:
+      - '9090:9090'
+    networks:
+      - onlinestore-vnext-network
+
+  grafana:
+    build:
+      context: ./docker-setup/grafana
+      dockerfile: Dockerfile
+    container_name: grafana
+    ports:
+      - '3001:3000'
+    environment:
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel,snuids-trafficlights-panel,vonage-status-panel,flant-statusmap-panel
+    networks:
+      - onlinestore-vnext-network
+ 
+  influxdb:
+    image: influxdb:1.8
+    ports:
+      - "8086:8086"
+    environment:
+      - INFLUXDB_DB=k6
+    networks:
+      - onlinestore-vnext-network
+
+  seq:
+    image: datalust/seq:latest
+    container_name: seq
+    ports:
+      - '5341:80'
+    environment:
+      - ACCEPT_EULA=Y
+    networks:
+      - onlinestore-vnext-network
+
+
+networks:
+  onlinestore-vnext-network:
+    name: onlinestore-vnext-network
+
+volumes:
+  localstack-data:
