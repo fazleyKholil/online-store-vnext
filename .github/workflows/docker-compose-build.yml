@@ -33,4 +33,4 @@ jobs:
 
     - name: Stop containers
       if: always()
-      run: docker-compose -f docker-compose.infra.ym -f  docker-compose.apps.yml -f docker-compose.loadtests.yml  down
+      run: docker-compose -f docker-compose.infra.yml -f  docker-compose.apps.yml -f docker-compose.loadtests.yml  down
