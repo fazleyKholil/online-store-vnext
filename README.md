@@ -1,5 +1,5 @@
 # online-store-vnext
-[![Build and Load Test](https://github.com/fazleyKholil/online-store/actions/workflows/docker-compose-build.yml/badge.svg)](https://github.com/fazleyKholil/online-store/actions/workflows/docker-compose-build.yml)
+[![Build and Load Test](https://github.com/fazleyKholil/online-store-vnext/actions/workflows/docker-compose-build.yml/badge.svg)](https://github.com/fazleyKholil/online-store-vnext/actions/workflows/docker-compose-build.yml)
 
 Demo online store demonstrating an optimisation from a monolith application https://github.com/fazleyKholil/online-store to a scalable architecture
 
@@ -26,7 +26,7 @@ To bring up the infrastructure and the services, the `docker-compose` command ca
 
 ```
  docker-compose -f docker-compose.infra.yml up --build --force-recreate -d  
- docker-compose -f docker-compose.app.yml up --build --force-recreate -d   
+ docker-compose -f docker-compose.apps.yml up --build --force-recreate -d   
  docker-compose -f docker-compose.loadbalancer.yml up --build --force-recreate -d
 ```
 
