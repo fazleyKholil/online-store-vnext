@@ -178,3 +178,11 @@ Fazley.Kholil@MAC-C02C96SNMD6M online-store-vnext %
 
 Expected result on Grafana :
 ![image](resources/k6loadtest.png)
+
+
+### Logging
+
+We use [Seq](https://datalust.co/seq) for logging.
+Seq will be accessible at http://localhost:5341/
+
+![image](resources/seg.png)
